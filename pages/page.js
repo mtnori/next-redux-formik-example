@@ -1,7 +1,6 @@
 import React from 'react';
-
-import withRedux from 'next-redux-wrapper';
-import { initStore, fooAction } from '../redux/store';
+import withRoot from '../components/HOC'
+import { fooAction } from '../redux/actions/foo';
 import MyForm from '../components/MyForm';
 import Router from 'next/router';
 
@@ -23,7 +22,7 @@ class Page extends React.Component {
 }
 
 const mapStateToProps = (state) => ({
-  foo: state.foo
+  foo: state.get('foo').get('foo')
 });
 
 const mapDispachToProps = dispatch => {
@@ -32,4 +31,4 @@ const mapDispachToProps = dispatch => {
   };
 };
 
-export default withRedux(initStore, mapStateToProps, mapDispachToProps)(Page);
+export default withRoot(mapStateToProps, mapDispachToProps)(Page);
