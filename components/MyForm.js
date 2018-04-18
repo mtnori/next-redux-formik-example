@@ -1,7 +1,17 @@
+// @flow
 import React from 'react';
 import { withFormik } from 'formik';
+import Yup from 'yup';
 
-const formikEnhancer = withFormik({
+type Props = {
+  foo: string
+}
+
+type Values = {
+  foo: string
+}
+
+const formikEnhancer: withFormik<Props, Values> = withFormik({
   mapPropsToValues: props => ({ foo: props.foo }),
   handleSubmit: (values, { setSubmitting }) => {
     setTimeout(() => {
@@ -9,6 +19,9 @@ const formikEnhancer = withFormik({
       setSubmitting(false);
     }, 1000);
   },
+  validationSchema: props => Yup.object().shape({
+    foo: Yup.string()
+  }),
   enableReinitialize: true,
   displayName: 'MyForm', // helps with React DevTools
 });
