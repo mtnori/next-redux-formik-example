@@ -1,4 +1,5 @@
-import React from 'react'
+// @flow
+import React, { type ComponentType } from 'react'
 import Head from 'next/head'
 import Link from 'next/link'
 import NProgress from 'nprogress'
@@ -8,23 +9,34 @@ const linkStyle = {
   margin: '0 10px 0 0'
 }
 
-const withLoading = (Component) =>
-  class extends React.Component {
-    static async getInitialProps() {
-      console.log('call getInitialProps')
-      if (Component.getInitialProps) {
-        return await Component.getInitialProps();
+interface StaticInterface {
+  getInitialProps(): any
+}
+
+type Context = {
+  +pathname: string,
+  +query: any,
+  +req?: any,
+  +res?: any,
+  +xhr?: any,
+  +err?: any
+};
+
+const withLoading = (Page: Class<React$Component<any, any>> & { +getInitialProps: (ctx: Context) => Promise<*> }) =>
+  class extends React.Component<*> {
+    static async getInitialProps(ctx: Context) {
+      if (Page.getInitialProps && typeof Page.getInitialProps === 'function') {
+        return await Page.getInitialProps(ctx);
       }
       return {};
     }
-    constructor(props) {
+    constructor(props: any) {
       super(props);
       Router.onRouteChangeStart = (url) => {
         console.log(`Loading: ${url}`)
         NProgress.start()
       }
       Router.onRouteChangeComplete = () => {
-        console.log('ルーティング終了')
         NProgress.done()
       }
       Router.onRouteChangeError = () => NProgress.done()
@@ -45,7 +57,7 @@ const withLoading = (Component) =>
             <Link href='/loading/forever'><a style={linkStyle}>Forever</a></Link>
             <Link href='/loading/non-existing'><a style={linkStyle}>Non Existing Page</a></Link>
           </div>
-          <Component {...this.props} />
+          <Page {...this.props} />
         </div>
       );
     }

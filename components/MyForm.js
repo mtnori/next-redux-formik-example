@@ -1,30 +1,24 @@
 // @flow
 import React from 'react';
+import { compose } from 'redux';
 import { withFormik } from 'formik';
 import Yup from 'yup';
+import { withStyles } from 'material-ui/styles'
+
+const styles = theme => ({
+  container: {
+    backgroundColor: 'blue'
+  }
+})
 
 type Props = {
-  foo: string
-}
-
-type Values = {
-  foo: string
-}
-
-const formikEnhancer: withFormik<Props, Values> = withFormik({
-  mapPropsToValues: props => ({ foo: props.foo }),
-  handleSubmit: (values, { setSubmitting }) => {
-    setTimeout(() => {
-      alert(JSON.stringify(values, null, 2));
-      setSubmitting(false);
-    }, 1000);
-  },
-  validationSchema: props => Yup.object().shape({
-    foo: Yup.string()
-  }),
-  enableReinitialize: true,
-  displayName: 'MyForm', // helps with React DevTools
-});
+  foo: string,
+  values: Object,
+  handleChange: Function,
+  handleBlur: Function,
+  isSubmitting: boolean,
+  handleSubmit: Function
+};
 
 const MyForm = props => {
   const {
@@ -54,4 +48,21 @@ const MyForm = props => {
   );
 };
 
-export default formikEnhancer(MyForm);
+const enhance = compose(
+  withStyles(styles),
+  withFormik({
+    mapPropsToValues: props => ({ foo: props.foo }),
+    handleSubmit: (values, { setSubmitting }) => {
+      setTimeout(() => {
+        alert(JSON.stringify(values, null, 2));
+        setSubmitting(false);
+      }, 1000);
+    },
+    validationSchema: props => Yup.object().shape({
+      foo: Yup.string()
+    }),
+    displayName: 'MyForm', // helps with React DevTools
+  })
+);
+
+export default enhance(MyForm);

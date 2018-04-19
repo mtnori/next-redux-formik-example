@@ -14,6 +14,7 @@
   "dependencies": {
     "formik": "^0.11.11",
     "immutable": "^4.0.0-rc.9",
+    "material-ui": "^1.0.0-beta.42",
     "next": "^5.1.0",
     "next-redux-wrapper": "^1.3.5",
     "nprogress": "^0.2.0",

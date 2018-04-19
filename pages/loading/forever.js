@@ -1,9 +1,10 @@
+// @flow
 import React, { Component } from 'react'
-import withRoot from '../../components/HOC'
+import withLoading from '../../components/HOC/withLoading'
 
-class Forever extends Component {
+const forever = class Forever extends Component<*> {
   // Add some delay
-  static async getInitialProps () {
+  static async getInitialProps (ctx) {
     await new Promise((resolve) => {
       setTimeout(resolve, 3000)
     })
@@ -22,4 +23,5 @@ class Forever extends Component {
     )
   }
 }
-export default withRoot()(Forever)
+
+export default withLoading(forever)
