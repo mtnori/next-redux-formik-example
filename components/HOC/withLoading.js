@@ -22,7 +22,7 @@ type Context = {
   +err?: any
 };
 
-const withLoading = (Page: Class<React$Component<any, any>> & { +getInitialProps: (ctx: Context) => Promise<*> }) =>
+const withLoading = (Page: (Class<React$Component<any, any>> | Class<React$Component<any>>) & { +getInitialProps: (ctx: Context) => Promise<*> }) =>
   class extends React.Component<*> {
     static async getInitialProps(ctx: Context) {
       if (Page.getInitialProps && typeof Page.getInitialProps === 'function') {

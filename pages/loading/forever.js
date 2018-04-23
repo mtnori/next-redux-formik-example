@@ -2,26 +2,19 @@
 import React, { Component } from 'react'
 import withLoading from '../../components/HOC/withLoading'
 
-const forever = class Forever extends Component<*> {
-  // Add some delay
-  static async getInitialProps (ctx) {
-    await new Promise((resolve) => {
-      setTimeout(resolve, 3000)
-    })
-    return {}
-  }
+const Forever = (props: any) => {
 
-  constructor(props) {
-    super(props);
-  }
-
-  render () {
     return (
       <div>
         <p>This page was rendered for a while!</p>
       </div>
     )
-  }
+}
+Forever.getInitialProps = async (ctx) => {
+  await new Promise((resolve) => {
+    setTimeout(resolve, 3000)
+  })
+  return {}
 }
 
-export default withLoading(forever)
+export default withLoading(Forever)

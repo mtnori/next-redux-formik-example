@@ -2,6 +2,7 @@ import React from 'react';
 import withRoot from '../components/HOC'
 import { fooAction } from '../redux/actions/foo';
 import MyForm from '../components/MyForm';
+import MyFormWithValid from '../components/MyFormWithValid';
 import Router from 'next/router';
 
 class Page extends React.Component {
@@ -16,6 +17,7 @@ class Page extends React.Component {
         <button onClick={this.handleClick}>ToAsyncPage</button>
         <p>{foo}</p>
         <MyForm foo={foo} />
+        <MyFormWithValid />
       </div>
     );
   }
