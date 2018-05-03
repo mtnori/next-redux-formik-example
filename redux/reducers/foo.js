@@ -2,7 +2,7 @@ import Immutable from 'immutable';
 import * as foo from '../constants/foo';
 
 const initialState = Immutable.Map({
-  foo: ''
+  foo: 'bar'
 });
 
 const reducer = (state = initialState, action) => {

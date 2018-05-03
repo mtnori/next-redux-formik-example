@@ -1,4 +1,5 @@
 import React from 'react'
+import BaseApp, { Container } from "next/app";
 import { connect } from 'react-redux';
 import Notifications from 'react-notification-system-redux';
 
@@ -8,12 +9,12 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
   show: () => dispatch(show())
 })
-const withNotifs = (Page) =>
+const withNotifs = (App) =>
   connect(mapStateToProps, mapDispatchToProps)(
     class extends React.Component {
-      static async getInitialProps() {
-        if (Page.getInitialProps) {
-          return await Page.getInitialProps();
+      static async getInitialProps(ctx) {
+        if (App.getInitialProps) {
+          return await App.getInitialProps(ctx);
         }
         return {};
       }
@@ -21,9 +22,8 @@ const withNotifs = (Page) =>
         const { notifications } = this.props;
         return (
           <div>
-            <p>お知らせ</p>
-            <Notifications notifications={notifications.toArray()} />
-            <Page {...this.props} />
+            <Notifications notifications={notifications.toJS()} />
+            <App {...this.props} />
           </div>
         )
       }

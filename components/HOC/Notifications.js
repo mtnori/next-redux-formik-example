@@ -3,7 +3,7 @@ import default as Notify from 'react-notification-system-redux/lib';
 
 class Notifications extends Notify {
   componentDidMount() {
-    const {notifications} = nextProps;
+    const { notifications } = nextProps;
     const notificationIds = notifications.map(notification => notification.uid);
     const systemNotifications = this.system().state.notifications || [];
 

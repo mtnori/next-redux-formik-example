@@ -1,23 +1,52 @@
 import React from 'react';
-import withRoot from '../components/HOC'
+import { connect } from "react-redux";
 import { fooAction } from '../redux/actions/foo';
-import MyForm from '../components/MyForm';
-import MyFormWithValid from '../components/MyFormWithValid';
+import { success } from 'react-notification-system-redux';
 import Router from 'next/router';
+import Button from 'material-ui/Button';
+import { withStyles } from 'material-ui/styles';
+
+const notificationOpts = {
+  // uid: 'once-please', // you can specify your own uid if required
+  title: 'Hey, it\'s good to see you!',
+  message: 'Now you can see how easy it is to use notifications in React!',
+  position: 'tr',
+  autoDismiss: 5,
+  action: {
+    label: 'Click me!!',
+    callback: () => alert('clicked!')
+  }
+};
+
+const styles = theme => ({
+  button: {
+    margin: theme.spacing.unit,
+  }
+});
 
 class Page extends React.Component {
-  handleClick = () => {
-    Router.push('/async');
+  /**
+   * propsが変化したらURLを変更する
+   */
+  componentDidUpdate(prevProps, prevState) {
+    if (prevProps.foo !== this.props.foo) {
+      this.props.success(notificationOpts);
+      Router.push('/index');
+    }
   }
+
   render() {
-    const { foo, fooAction } = this.props;
+    const { foo, fooAction, classes } = this.props;
     return (
       <div>
-        <button onClick={fooAction}>Click</button>
-        <button onClick={this.handleClick}>ToAsyncPage</button>
+        <Button
+          variant="raised"
+          onClick={fooAction}
+          color="primary"
+          className={classes.button}>
+          Click
+        </Button>
         <p>{foo}</p>
-        <MyForm foo={foo} />
-        <MyFormWithValid />
       </div>
     );
   }
@@ -29,8 +58,8 @@ const mapStateToProps = (state) => ({
 
 const mapDispachToProps = dispatch => {
   return {
-    fooAction: () => dispatch(fooAction())
+    fooAction: () => dispatch(fooAction()),
+    success: (notificationOpts) => dispatch(success(notificationOpts))
   };
 };
-
-export default withRoot(mapStateToProps, mapDispachToProps)(Page);
+export default withStyles(styles)(connect(mapStateToProps, mapDispachToProps)(Page));
