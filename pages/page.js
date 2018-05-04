@@ -1,5 +1,5 @@
 import React from 'react';
-import { connect } from "react-redux";
+import { connect } from 'react-redux';
 import { fooAction } from '../redux/actions/foo';
 import { fetch } from '../redux/actions/users';
 import { success } from 'react-notification-system-redux';
@@ -21,7 +21,7 @@ const notificationOpts = {
 
 const styles = theme => ({
   button: {
-    margin: theme.spacing.unit,
+    margin: theme.spacing.unit
   }
 });
 
@@ -49,7 +49,8 @@ class Page extends React.Component {
           variant="raised"
           onClick={fooAction}
           color="primary"
-          className={classes.button}>
+          className={classes.button}
+        >
           Click
         </Button>
         <p>{baz}</p>
@@ -66,10 +67,10 @@ const mapStateToProps = (state, ownProps) => ({
   users: state.get('users')
 });
 
-const mapDispachToProps = dispatch => {
-  return {
-    fooAction: () => dispatch(fooAction()),
-    success: (notificationOpts) => dispatch(success(notificationOpts))
-  };
-};
-export default withStyles(styles)(connect(mapStateToProps, mapDispachToProps)(Page));
+const mapDispachToProps = dispatch => ({
+  fooAction: () => dispatch(fooAction()),
+  success: notificationOpts => dispatch(success(notificationOpts))
+});
+export default withStyles(styles)(
+  connect(mapStateToProps, mapDispachToProps)(Page)
+);

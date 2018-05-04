@@ -1,3 +1,4 @@
+// @flow
 async function dummy(id) {
   return { id, name: 'testuser' };
 }

@@ -3,13 +3,13 @@ import React from 'react';
 import { compose } from 'redux';
 import { withFormik } from 'formik';
 import Yup from 'yup';
-import { withStyles } from 'material-ui/styles'
+import { withStyles } from 'material-ui/styles';
 
 const styles = theme => ({
   container: {
     backgroundColor: 'blue'
   }
-})
+});
 
 type Props = {
   foo: string,
@@ -58,10 +58,11 @@ const enhance = compose(
         setSubmitting(false);
       }, 1000);
     },
-    validationSchema: props => Yup.object().shape({
-      foo: Yup.string()
-    }),
-    displayName: 'MyForm', // helps with React DevTools
+    validationSchema: props =>
+      Yup.object().shape({
+        foo: Yup.string()
+      }),
+    displayName: 'MyForm' // helps with React DevTools
   })
 );
 

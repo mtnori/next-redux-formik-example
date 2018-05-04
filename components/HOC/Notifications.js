@@ -1,7 +1,6 @@
-import React from 'react';
 import default as Notify from 'react-notification-system-redux/lib';
 
-class Notifications extends Notify {
+export default class Notifications extends Notify {
   componentDidMount() {
     const { notifications } = nextProps;
     const notificationIds = notifications.map(notification => notification.uid);
@@ -9,8 +8,8 @@ class Notifications extends Notify {
 
     if (notifications.length > 0) {
       // Get all active notifications from react-notification-system
-      /// and remove all where uid is not found in the reducer
-      (systemNotifications).forEach(notification => {
+      // / and remove all where uid is not found in the reducer
+      systemNotifications.forEach(notification => {
         if (notificationIds.indexOf(notification.uid) < 0) {
           this.system().removeNotification(notification.uid);
         }

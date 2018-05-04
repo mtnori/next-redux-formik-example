@@ -3,13 +3,13 @@ import React from 'react';
 import { compose } from 'redux';
 import { withFormik } from 'formik';
 import Yup from 'yup';
-import { withStyles } from 'material-ui/styles'
+import { withStyles } from 'material-ui/styles';
 
 const styles = theme => ({
   container: {
     backgroundColor: 'blue'
   }
-})
+});
 
 type Props = {
   values: Object,
@@ -73,10 +73,15 @@ const enhance = compose(
         setSubmitting(false);
       }, 1000);
     },
-    validationSchema: props => Yup.lazy(values => Yup.object().shape({
-      foo: values.bar ? Yup.string().required('foo is required') : Yup.string()
-    })),
-    displayName: 'MyFormWithValid', // helps with React DevTools
+    validationSchema: props =>
+      Yup.lazy(values =>
+        Yup.object().shape({
+          foo: values.bar
+            ? Yup.string().required('foo is required')
+            : Yup.string()
+        })
+      ),
+    displayName: 'MyFormWithValid' // helps with React DevTools
   })
 );
 

@@ -1,5 +1,5 @@
 import React from 'react';
-import BaseApp, { Container } from "next/app";
+import BaseApp, { Container } from 'next/app';
 import PropTypes from 'prop-types';
 import { MuiThemeProvider } from 'material-ui/styles';
 import CssBaseline from 'material-ui/CssBaseline';
@@ -39,7 +39,7 @@ function withMaterialUI(Component) {
   }
 
   WithMaterialUI.propTypes = {
-    pageContext: PropTypes.object,
+    pageContext: PropTypes.object
   };
 
   WithMaterialUI.getInitialProps = ctx => {

@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import withRoot from '../../components/HOC'
+import { connect } from 'react-redux';
 import { success } from 'react-notification-system-redux';
 import Router from 'next/router';
 
@@ -35,7 +35,7 @@ class About extends Component {
         <p>This is about Next!</p>
         <button onClick={this.handleClick}>おしらせ</button>
       </div>
-    )
+    );
   }
 }
 
@@ -43,4 +43,4 @@ const mapDispatchToProps = dispatch => ({
   success: (notificationOpts) => dispatch(success(notificationOpts))
 })
 
-export default withRoot(null, mapDispatchToProps)(About)
+export default connect(null, mapDispatchToProps)(About);
