@@ -13,9 +13,7 @@ class MyApp extends React.Component {
   render() {
     const { Component, pageProps } = this.props;
     return (
-      <React.StrictMode>
-        <Component {...pageProps} />
-      </React.StrictMode>
+      <Component {...pageProps} />
     );
   }
 }
