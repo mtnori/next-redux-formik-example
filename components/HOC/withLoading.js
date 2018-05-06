@@ -12,7 +12,8 @@ const withLoading = Page =>
   class extends React.Component {
     static async getInitialProps(ctx) {
       if (Page.getInitialProps && typeof Page.getInitialProps === 'function') {
-        return await Page.getInitialProps(ctx);
+        const props = await Page.getInitialProps(ctx);
+        return props;
       }
       return {};
     }

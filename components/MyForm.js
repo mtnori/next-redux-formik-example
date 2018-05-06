@@ -5,7 +5,7 @@ import { withFormik } from 'formik';
 import Yup from 'yup';
 import { withStyles } from 'material-ui/styles';
 
-const styles = theme => ({
+const styles = () => ({
   container: {
     backgroundColor: 'blue'
   }
@@ -58,7 +58,7 @@ const enhance = compose(
         setSubmitting(false);
       }, 1000);
     },
-    validationSchema: props =>
+    validationSchema: () =>
       Yup.object().shape({
         foo: Yup.string()
       }),

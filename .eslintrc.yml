@@ -4,6 +4,7 @@ extends:
   - prettier
 env:
   node: true
+  browser: true
   es6: true
 rules:
   "no-console": off
@@ -11,14 +12,27 @@ rules:
     - error
     - singleQuote: true
       semi: true
+  "no-shadow": off
+  "jsx-a11y/label-has-for":
+    - error
+    - allowChildren: true
+  "react/jsx-filename-extension":
+    - error
+    - extensions:
+      - ".js"
+      - ".jsx"
   "flowtype-errors/show-errors": error
   "flowtype-errors/show-warnings": warn
+  "flowtype/define-flow-type": warn
+  "flowtype/use-flow-type": warn
 plugins:
   - import
   - prettier
   - flowtype
   - "flowtype-errors"
 settings:
+  "flowtype":
+    "onlyFilesWithFlowAnnotation": true
   "import/resolve":
     moduleDirectory:
       - node_modules

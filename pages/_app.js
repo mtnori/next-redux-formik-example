@@ -1,7 +1,13 @@
-import React from 'react';
+// @flow
+import * as React from 'react';
 import withRoot from '../components/HOC';
 
-class MyApp extends React.Component {
+type Props = {
+  Component: React.ComponentType<any>,
+  pageProps: {}
+};
+
+class MyApp extends React.Component<Props> {
   static async getInitialProps({ Component, ctx }) {
     // we can dispatch from here too
     // ctx.store.dispatch({type: 'FOO', payload: 'foo'});

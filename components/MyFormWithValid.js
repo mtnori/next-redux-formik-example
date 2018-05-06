@@ -5,7 +5,7 @@ import { withFormik } from 'formik';
 import Yup from 'yup';
 import { withStyles } from 'material-ui/styles';
 
-const styles = theme => ({
+const styles = () => ({
   container: {
     backgroundColor: 'blue'
   }
@@ -13,6 +13,7 @@ const styles = theme => ({
 
 type Props = {
   values: Object,
+  errors: Object,
   handleChange: Function,
   handleBlur: Function,
   isSubmitting: boolean,
@@ -73,7 +74,7 @@ const enhance = compose(
         setSubmitting(false);
       }, 1000);
     },
-    validationSchema: props =>
+    validationSchema: () =>
       Yup.lazy(values =>
         Yup.object().shape({
           foo: values.bar

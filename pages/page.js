@@ -1,11 +1,23 @@
+// @flow
 import React from 'react';
 import { connect } from 'react-redux';
-import { fooAction } from '../redux/actions/foo';
-import { fetch } from '../redux/actions/users';
 import { success } from 'react-notification-system-redux';
 import Router from 'next/router';
 import Button from 'material-ui/Button';
 import { withStyles } from 'material-ui/styles';
+import { fooAction } from '../redux/actions/foo';
+import { fetch } from '../redux/actions/users';
+import MyEnhancedComponent from '../components/MyEnhancedComponent';
+import MyEnhancedComponent2 from '../components/MyEnhancedComponent2';
+
+type Props = {
+  foo: string,
+  baz: string,
+  users: Object,
+  fooAction: Function,
+  classes: Object,
+  success: Function
+};
 
 const notificationOpts = {
   // uid: 'once-please', // you can specify your own uid if required
@@ -25,7 +37,7 @@ const styles = theme => ({
   }
 });
 
-class Page extends React.Component {
+class Page extends React.Component<Props> {
   static getInitialProps({ store }) {
     store.dispatch(fetch(1));
     return { baz: 'baz' };
@@ -34,7 +46,7 @@ class Page extends React.Component {
   /**
    * propsが変化したらURLを変更する
    */
-  componentDidUpdate(prevProps, prevState) {
+  componentDidUpdate(prevProps) {
     if (prevProps.foo !== this.props.foo) {
       this.props.success(notificationOpts);
       Router.push('/index');
@@ -45,6 +57,8 @@ class Page extends React.Component {
     const { foo, baz, users, fooAction, classes } = this.props;
     return (
       <div>
+        <MyEnhancedComponent foo={1} />
+        <MyEnhancedComponent2 a={1} b={2} />
         <Button
           variant="raised"
           onClick={fooAction}
