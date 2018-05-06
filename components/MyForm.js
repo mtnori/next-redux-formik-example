@@ -1,5 +1,5 @@
 // @flow
-import React from 'react';
+import * as React from 'react';
 import { compose } from 'redux';
 import { withFormik } from 'formik';
 import Yup from 'yup';
@@ -11,30 +11,42 @@ const styles = () => ({
   }
 });
 
-type Props = {
-  foo: string,
+type PropsOutput = {
   values: Object,
   handleChange: Function,
   handleBlur: Function,
   isSubmitting: boolean,
-  handleSubmit: Function
+  handleSubmit: Function,
+  classes: Object
 };
 
-const MyForm = (props: Props) => {
-  const {
-    values,
-    handleChange,
-    handleBlur,
-    isSubmitting,
-    handleSubmit
-  } = props;
-  return (
+type PropsInput = $Diff<
+  PropsOutput,
+  {
+    values: Object | void,
+    handleChange: Function | void,
+    handleBlur: Function | void,
+    isSubmitting: boolean | void,
+    handleSubmit: Function | void,
+    classes: Object | void
+  }
+> & { foo: string };
+
+const MyForm = ({
+  values,
+  handleChange,
+  handleBlur,
+  isSubmitting,
+  handleSubmit,
+  classes
+}: PropsOutput) => (
+  <div className={classes.container}>
     <form onSubmit={handleSubmit}>
-      <label htmlFor="email" style={{ display: 'block' }}>
-        Email
+      <label htmlFor="foo" style={{ display: 'block' }}>
+        Foo
       </label>
       <input
-        id="email"
+        id="foo"
         placeholder="Enter your email"
         type="text"
         value={values.foo}
@@ -45,16 +57,18 @@ const MyForm = (props: Props) => {
         Submit
       </button>
     </form>
-  );
-};
+  </div>
+);
 
-const enhance = compose(
+const enhance: (
+  React.ComponentType<PropsOutput>
+) => React.ComponentType<PropsInput> = compose(
   withStyles(styles),
   withFormik({
     mapPropsToValues: props => ({ foo: props.foo }),
     handleSubmit: (values, { setSubmitting }) => {
       setTimeout(() => {
-        alert(JSON.stringify(values, null, 2));
+        console.log(JSON.stringify(values, null, 2));
         setSubmitting(false);
       }, 1000);
     },

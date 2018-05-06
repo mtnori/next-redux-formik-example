@@ -9,6 +9,7 @@ import { fooAction } from '../redux/actions/foo';
 import { fetch } from '../redux/actions/users';
 import MyEnhancedComponent from '../components/MyEnhancedComponent';
 import MyEnhancedComponent2 from '../components/MyEnhancedComponent2';
+import MyForm from '../components/MyForm';
 
 type Props = {
   foo: string,
@@ -57,6 +58,7 @@ class Page extends React.Component<Props> {
     const { foo, baz, users, fooAction, classes } = this.props;
     return (
       <div>
+        <MyForm foo="999" />
         <MyEnhancedComponent foo={1} />
         <MyEnhancedComponent2 a={1} b={2} />
         <Button
@@ -67,9 +69,9 @@ class Page extends React.Component<Props> {
         >
           Click
         </Button>
-        <p>{baz}</p>
-        <p>{foo}</p>
-        <p>{users.get('id')}</p>
+        <p>baz:{baz}</p>
+        <p>foo:{foo}</p>
+        <p>users.id:{users.get('id')}</p>
       </div>
     );
   }
