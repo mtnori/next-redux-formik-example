@@ -1,6 +1,6 @@
 // @flow
 import * as React from 'react';
-import { compose } from 'redux';
+import { compose } from 'recompose';
 import { withFormik } from 'formik';
 import Yup from 'yup';
 import { withStyles } from 'material-ui/styles';
@@ -20,17 +20,9 @@ type PropsOutput = {
   classes: Object
 };
 
-type PropsInput = $Diff<
-  PropsOutput,
-  {
-    values: Object | void,
-    handleChange: Function | void,
-    handleBlur: Function | void,
-    isSubmitting: boolean | void,
-    handleSubmit: Function | void,
-    classes: Object | void
-  }
-> & { foo: string };
+type PropsInput = {
+  foo: string
+};
 
 const MyForm = ({
   values,

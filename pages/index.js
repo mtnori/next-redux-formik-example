@@ -1,4 +1,6 @@
 // @flow
 import React from 'react';
+import withAuth from '../components/HOC/withAuth';
 
-export default () => <div>Welcome to next.js</div>;
+const Index = () => <div>Welcome to next.js</div>;
+export default withAuth(Index);

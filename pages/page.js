@@ -10,6 +10,7 @@ import { fetch } from '../redux/actions/users';
 import MyEnhancedComponent from '../components/MyEnhancedComponent';
 import MyEnhancedComponent2 from '../components/MyEnhancedComponent2';
 import MyForm from '../components/MyForm';
+import withAuth from '../components/HOC/withAuth';
 
 type Props = {
   foo: string,
@@ -87,6 +88,6 @@ const mapDispachToProps = dispatch => ({
   fooAction: () => dispatch(fooAction()),
   success: notificationOpts => dispatch(success(notificationOpts))
 });
-export default withStyles(styles)(
-  connect(mapStateToProps, mapDispachToProps)(Page)
+export default withAuth(
+  withStyles(styles)(connect(mapStateToProps, mapDispachToProps)(Page))
 );

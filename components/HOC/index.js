@@ -1,4 +1,5 @@
-import { compose } from 'redux';
+// @flow
+import { compose } from 'recompose';
 // import { initStore } from '../../redux/store'
 // import withRedux from 'next-redux-wrapper';
 import withReduxSaga from '../../redux/store';
