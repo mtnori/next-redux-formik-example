@@ -1,13 +1,10 @@
 // @flow
-import * as React from 'react';
+import React from 'react';
+import { Provider } from 'react-redux';
+import App, { Container } from 'next/app';
 import withRoot from '../components/HOC';
 
-type Props = {
-  Component: React.ComponentType<any>,
-  pageProps: {}
-};
-
-class MyApp extends React.Component<Props> {
+class MyApp extends App {
   static async getInitialProps({ Component, ctx }) {
     // we can dispatch from here too
     // ctx.store.dispatch({type: 'FOO', payload: 'foo'});
@@ -16,10 +13,15 @@ class MyApp extends React.Component<Props> {
       : {};
     return { pageProps };
   }
-
   render() {
-    const { Component, pageProps } = this.props;
-    return <Component {...pageProps} />;
+    const { Component, pageProps, store } = this.props;
+    return (
+      <Container>
+        <Provider store={store}>
+          <Component {...pageProps} />
+        </Provider>
+      </Container>
+    );
   }
 }
 // _app.js経由でアクセスする

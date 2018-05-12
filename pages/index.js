@@ -1,6 +1,18 @@
 // @flow
 import React from 'react';
-import withAuth from '../components/HOC/withAuth';
+import Link from 'next/link';
+import Router from 'next/router';
 
-const Index = () => <div>Welcome to next.js</div>;
-export default withAuth(Index);
+const Index = () => {
+  const handleClick = () => {
+    Router.push('/page');
+  };
+
+  return (
+    <div>
+      <p>Welcome to next.js</p>
+      <button onClick={handleClick}>aaaaa</button>
+    </div>
+  );
+};
+export default Index;

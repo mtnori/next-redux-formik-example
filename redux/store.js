@@ -1,12 +1,13 @@
 // @flow
-import { createStore, applyMiddleware } from 'redux';
-import createSagaMiddleware from 'redux-saga';
+import { createStore /* applyMiddleware */ } from 'redux';
+// import createSagaMiddleware from 'redux-saga';
 import withRedux from 'next-redux-wrapper';
 import Immutable from 'immutable';
+// import nextReduxSaga from 'next-redux-saga';
 import rootReducer from './reducers';
-import rootSaga from './sagas';
+// import rootSaga from './sagas';
 
-const sagaMiddleware = createSagaMiddleware();
+// const sagaMiddleware = createSagaMiddleware();
 
 /**
  * @param {object} initialState
@@ -20,18 +21,21 @@ const configureStore = (initialState = Immutable.Map({})) => {
   if (!initialState.toJS) initState = Immutable.fromJS(initState);
   const store = createStore(
     rootReducer,
-    initState,
-    applyMiddleware(sagaMiddleware)
+    initState
+    // applyMiddleware(sagaMiddleware)
   );
 
+  /*
   store.runSagaTask = () => {
     store.sagaTask = sagaMiddleware.run(rootSaga);
   };
 
   store.runSagaTask();
+  */
   return store;
 };
 
 export default function withReduxSaga(BaseComponent: any) {
+  // return withRedux(configureStore)(nextReduxSaga(BaseComponent));
   return withRedux(configureStore)(BaseComponent);
 }

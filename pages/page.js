@@ -1,26 +1,28 @@
 // @flow
 import React from 'react';
 import { connect } from 'react-redux';
-import { success } from 'react-notification-system-redux';
+// import { success } from 'react-notification-system-redux';
 import Router from 'next/router';
 import Button from 'material-ui/Button';
 import { withStyles } from 'material-ui/styles';
 import { fooAction } from '../redux/actions/foo';
-import { fetch } from '../redux/actions/users';
+// import { fetch } from '../redux/actions/users';
 import MyEnhancedComponent from '../components/MyEnhancedComponent';
 import MyEnhancedComponent2 from '../components/MyEnhancedComponent2';
 import MyForm from '../components/MyForm';
-import withAuth from '../components/HOC/withAuth';
+// import withAuth from '../components/HOC/withAuth';
+import UsersActionDispatcher from '../redux/dispatchers/users';
 
 type Props = {
   foo: string,
   baz: string,
   users: Object,
   fooAction: Function,
-  classes: Object,
-  success: Function
+  classes: Object
+  //   success: Function
 };
 
+/*
 const notificationOpts = {
   // uid: 'once-please', // you can specify your own uid if required
   title: 'Success',
@@ -32,6 +34,7 @@ const notificationOpts = {
     callback: () => alert('clicked!')
   }
 };
+*/
 
 const styles = theme => ({
   button: {
@@ -40,8 +43,11 @@ const styles = theme => ({
 });
 
 class Page extends React.Component<Props> {
-  static getInitialProps({ store }) {
-    store.dispatch(fetch(1));
+  static async getInitialProps({ store }) {
+    // store.dispatch(fetch(1));
+    // Redux-Sagaを廃止したパターン
+    const actions = new UsersActionDispatcher(store.dispatch);
+    await actions.fetchUser(1);
     return { baz: 'baz' };
   }
 
@@ -50,7 +56,7 @@ class Page extends React.Component<Props> {
    */
   componentDidUpdate(prevProps) {
     if (prevProps.foo !== this.props.foo) {
-      this.props.success(notificationOpts);
+      // this.props.success(notificationOpts);
       Router.push('/index');
     }
   }
@@ -72,7 +78,7 @@ class Page extends React.Component<Props> {
         </Button>
         <p>baz:{baz}</p>
         <p>foo:{foo}</p>
-        <p>users.id:{users.get('id')}</p>
+        <p>users.id:{users.get('name')}</p>
       </div>
     );
   }
@@ -85,9 +91,9 @@ const mapStateToProps = (state, ownProps) => ({
 });
 
 const mapDispachToProps = dispatch => ({
-  fooAction: () => dispatch(fooAction()),
-  success: notificationOpts => dispatch(success(notificationOpts))
+  fooAction: () => dispatch(fooAction())
+  // success: notificationOpts => dispatch(success(notificationOpts))
 });
-export default withAuth(
-  withStyles(styles)(connect(mapStateToProps, mapDispachToProps)(Page))
+export default withStyles(styles)(
+  connect(mapStateToProps, mapDispachToProps)(Page)
 );
