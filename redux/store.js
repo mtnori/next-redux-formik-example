@@ -1,13 +1,7 @@
 // @flow
-import { createStore /* applyMiddleware */ } from 'redux';
-// import createSagaMiddleware from 'redux-saga';
-import withRedux from 'next-redux-wrapper';
+import { createStore } from 'redux';
 import Immutable from 'immutable';
-// import nextReduxSaga from 'next-redux-saga';
 import rootReducer from './reducers';
-// import rootSaga from './sagas';
-
-// const sagaMiddleware = createSagaMiddleware();
 
 /**
  * @param {object} initialState
@@ -16,26 +10,12 @@ import rootReducer from './reducers';
  * @param {boolean} options.debug User-defined debug mode param
  * @param {string} options.storeKey This key will be used to preserve store in global namespace for safe HMR
  */
-const configureStore = (initialState = Immutable.Map({})) => {
+const configureStore = (
+  initialState: Immutable.Map<string, any> = Immutable.Map({})
+) => {
   let initState = initialState;
   if (!initialState.toJS) initState = Immutable.fromJS(initState);
-  const store = createStore(
-    rootReducer,
-    initState
-    // applyMiddleware(sagaMiddleware)
-  );
-
-  /*
-  store.runSagaTask = () => {
-    store.sagaTask = sagaMiddleware.run(rootSaga);
-  };
-
-  store.runSagaTask();
-  */
+  const store = createStore(rootReducer, initState);
   return store;
 };
-
-export default function withReduxSaga(BaseComponent: any) {
-  // return withRedux(configureStore)(nextReduxSaga(BaseComponent));
-  return withRedux(configureStore)(BaseComponent);
-}
+export default configureStore;

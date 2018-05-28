@@ -3,8 +3,8 @@ import React from 'react';
 import { connect } from 'react-redux';
 // import { success } from 'react-notification-system-redux';
 import Router from 'next/router';
-import Button from 'material-ui/Button';
-import { withStyles } from 'material-ui/styles';
+import Button from '@material-ui/core/Button';
+import { withStyles } from '@material-ui/core/styles';
 import { fooAction } from '../redux/actions/foo';
 // import { fetch } from '../redux/actions/users';
 import MyEnhancedComponent from '../components/MyEnhancedComponent';
@@ -46,8 +46,11 @@ class Page extends React.Component<Props> {
   static async getInitialProps({ store }) {
     // store.dispatch(fetch(1));
     // Redux-Sagaを廃止したパターン
+    /*
     const actions = new UsersActionDispatcher(store.dispatch);
     await actions.fetchUser(1);
+    return { baz: 'baz' };
+    */
     return { baz: 'baz' };
   }
 
@@ -57,12 +60,12 @@ class Page extends React.Component<Props> {
   componentDidUpdate(prevProps) {
     if (prevProps.foo !== this.props.foo) {
       // this.props.success(notificationOpts);
-      Router.push('/index');
+      Router.push('/');
     }
   }
 
   render() {
-    const { foo, baz, users, fooAction, classes } = this.props;
+    const { foo, baz, fooAction, classes } = this.props;
     return (
       <div>
         <MyForm foo="999" />
@@ -78,7 +81,6 @@ class Page extends React.Component<Props> {
         </Button>
         <p>baz:{baz}</p>
         <p>foo:{foo}</p>
-        <p>users.id:{users.get('name')}</p>
       </div>
     );
   }
@@ -86,8 +88,7 @@ class Page extends React.Component<Props> {
 
 const mapStateToProps = (state, ownProps) => ({
   ...ownProps,
-  foo: state.get('foo').get('foo'),
-  users: state.get('users')
+  foo: state.get('foo').get('foo')
 });
 
 const mapDispachToProps = dispatch => ({

@@ -8,7 +8,6 @@ export function fetch(id) {
 }
 
 export function fetchSuccess(data) {
-  console.log('success');
   return {
     type: users.FETCH_SUCCESS,
     data
@@ -16,7 +15,6 @@ export function fetchSuccess(data) {
 }
 
 export function fetchFailure(error) {
-  console.log('failure');
   return {
     type: users.FETCH_FAILURE,
     error

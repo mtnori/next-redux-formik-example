@@ -3,7 +3,7 @@ import * as React from 'react';
 import { compose } from 'recompose';
 import { withFormik } from 'formik';
 import Yup from 'yup';
-import { withStyles } from 'material-ui/styles';
+import { withStyles } from '@material-ui/core/styles';
 
 const styles = () => ({
   container: {
